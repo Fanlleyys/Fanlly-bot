@@ -201,10 +201,13 @@ atau ketik apa aja buat ngobrol`
         // Tampilkan "typing..." indicator
         await ctx.replyWithChatAction('typing');
 
-        const response = await chatWithGemini(ctx.from.id, ctx.message.text);
-
-        // Kirim response langsung tanpa formatting
-        await ctx.reply(response);
+        try {
+            const response = await chatWithGemini(ctx.from.id, ctx.message.text);
+            await ctx.reply(response);
+        } catch (error) {
+            console.error('AI Error:', error);
+            await ctx.reply('haduh ai-nya lagi eror nih, bentar ya');
+        }
     });
 
     // Error handler

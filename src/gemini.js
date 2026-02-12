@@ -64,7 +64,7 @@ export async function chatWithGemini(userId, userMessage) {
     try {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({
-            model: 'gemini-3-flash-preview',
+            model: 'gemini-1.5-flash',
             systemInstruction: SYSTEM_PROMPT,
         });
 
@@ -88,14 +88,12 @@ export async function chatWithGemini(userId, userMessage) {
     } catch (error) {
         console.error('Gemini error:', error);
 
-        if (error.message?.includes('quota') || error.message?.includes('429')) {
-            return '⚠️ Maaf, quota AI lagi habis nih. Coba lagi dalam beberapa menit ya! 🙏';
-        }
+        return 'sorry quota AI abis, coba lagi ntar ya';
 
         if (error.message?.includes('API key')) {
-            return '⚠️ Ada masalah dengan API key Gemini. Hubungi admin.';
+            return 'masalah sama api key gemini nih, lapor admin';
         }
 
-        return '😵 Waduh, ada error nih. Coba lagi ya!\n\nError: ' + (error.message || 'Unknown error');
+        return 'waduh error nih, coba lagi ya\n\nError: ' + (error.message || 'Unknown error');
     }
 }
