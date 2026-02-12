@@ -2,11 +2,15 @@ import { Bot } from 'grammy';
 import { getDueReminders, markAsSent } from '../../src/reminder.js';
 
 export default async function handler(req, res) {
-    // Proteksi: hanya bisa dipanggil dengan secret yang benar
+    // Proteksi: bisa lewat Authorization Header atau query param ?key=SECRET
     const authHeader = req.headers['authorization'];
+    const queryKey = req.query.key;
     const cronSecret = process.env.CRON_SECRET;
 
-    if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    const validHeader = authHeader === `Bearer ${cronSecret}`;
+    const validQuery = queryKey === cronSecret;
+
+    if (cronSecret && !validHeader && !validQuery) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
