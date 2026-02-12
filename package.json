@@ -1,0 +1,22 @@
+{
+    "name": "telegram-bot-assistant",
+    "version": "1.0.0",
+    "description": "Bot Telegram personal assistant - finance tracker, reminder, AI chat",
+    "type": "module",
+    "scripts": {
+        "dev": "node api/webhook.js",
+        "db:push": "drizzle-kit push",
+        "db:generate": "drizzle-kit generate",
+        "setup-webhook": "node scripts/setup-webhook.js"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.21.0",
+        "@neondatabase/serverless": "^0.10.4",
+        "drizzle-orm": "^0.38.3",
+        "grammy": "^1.31.0"
+    },
+    "devDependencies": {
+        "dotenv": "^16.4.7",
+        "drizzle-kit": "^0.30.1"
+    }
+}
